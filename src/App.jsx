@@ -32,21 +32,21 @@ function App() {
 const sphRes = 64;
 
 const spheres = [
-  { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, opacity: 1 },
+  { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, roughness: 0.1, opacity: 1 },
 
   { position: [-0.3, -0.05, 0.8], size: 0.3, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.5 }, opacity: 1, roughness: 0.6, metalness: 1 },
-  { position: [0.35, -0.65, 2.5], size: 0.4, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.1, metalness: 0 },
-  { position: [0, 1, 0], size: 0.55, color: '#8A8A8A', dCoef: { a: 0.3, b: 0.15 }, roughness: 0.25, metalness: 0 },
+  { position: [0.35, -0.65, 2.5], size: 0.4, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0 },
+  { position: [0, 1, 0], size: 0.55, color: '#8A8A8A', dCoef: { a: 0.3, b: 0.15 },clearcoat: 0.8, roughness: 0.4, metalness: 0 },
 
   { position: [1.5, -0.5, 1], size: 0.7, color: '#8A8A8A', dCoef: { a: 0.1, b: 0.2 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 },
   { position: [-1.15, -1.5, -1], size: 0.9, color: '#363636', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.4, metalness: 0 },
-  { position: [-1.6, 1.6, -0.8], size: 1, color: '#D9D9D9', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.4, metalness: 0 },
+  { position: [-1.6, 1.6, -0.8], size: 1, color: '#D9D9D9', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.45, metalness: 0 },
 
-  { position: [1, -0.5, -1], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.4, metalness: 0 },
-  { position: [1.3, 2.2, -0.95], size: 1.25, color: 'blue', dCoef: { a: 0.2, b: 0.1 }, roughness: 0.4, metalness: 0 },
-  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.15, b: 0.1 }, opacity: 1, roughness: 0.4, metalness: 0 },
+  { position: [1, -0.5, -1], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.5, metalness: 0 },
+  { position: [1.3, 2.2, -0.95], size: 1.25, color: 'blue', dCoef: { a: 0.2, b: 0.1 }, clearcoat: 0.9, roughness: 0.6, metalness: 0 },
+  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.15, b: 0.1 }, opacity: 1, roughness: 0.7, metalness: 0 },
 
-  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, roughness: 0.4, metalness: 0 },
+  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, roughness: 0.8, metalness: 0 },
 
 
 
