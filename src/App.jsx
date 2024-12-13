@@ -11,7 +11,8 @@ import {
   Bloom,
   Noise,
   Vignette,
-  ChromaticAberration
+  ChromaticAberration,
+  FXAA
 } from '@react-three/postprocessing'
 
 import './App.css'
@@ -32,11 +33,11 @@ function App() {
 const sphRes = 64;
 
 const spheres = [
-  { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, roughness: 0.35, metalness: 0.3 , opacity: 1 },
+  { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, roughness: 0.35, metalness: 0.3, opacity: 1 },
 
   { position: [-0.3, -0.05, 0.8], size: 0.3, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.5 }, opacity: 1, clearcoat: 1, roughness: 0.6, metalness: 1 },
   { position: [0.35, -0.65, 2.5], size: 0.4, color: 'white', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0.3 },
-  { position: [0, 1, 0], size: 0.55, color: '#8A8A8A', dCoef: { a: 0.3, b: 0.15 },clearcoat: 0.8, roughness: 0.4, metalness: 0 },
+  { position: [0, 1, 0], size: 0.55, color: '#8A8A8A', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 },
 
   { position: [1.5, -0.5, 1], size: 0.7, color: '#8A8A8A', dCoef: { a: 0.1, b: 0.2 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 },
   { position: [-1.15, -1.5, -1], size: 0.9, color: '#363636', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.5, metalness: 0 },
@@ -84,7 +85,8 @@ function Scene() {
       {/* <spotLight position={[-3, 5, -6]} angle={0.55} penumbra={0.1} intensity={20} castShadow /> */}
       <OrbitControls />
       <EffectComposer disableNormalPass>
-        {/* <N8AO distanceFalloff={1} aoRadius={1} intensity={1} /> */}
+        {/* <N8AO distanceFalloff={1} aoRadius={1} intensity={2} /> */}
+        <FXAA />
         {/* <DepthOfField
           focusDistance={1}
           focalLength={0.02}
@@ -104,10 +106,10 @@ function Scene() {
       <Environment preset="night" intensity={0.9} blur={0.9} resolution={256}>
         <group rotation={[-Math.PI / 2, 0, 1]}>
 
-        <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -5]} scale={2} />
-        <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={2} />
-        <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-5, -1, -1]} scale={2} />
-        <Lightformer form="circle" intensity={2} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={8} />
+          <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -5]} scale={2} />
+          <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={2} />
+          <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-5, -1, -1]} scale={2} />
+          <Lightformer form="circle" intensity={2} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={8} />
         </group>
       </Environment>
     </Canvas>
