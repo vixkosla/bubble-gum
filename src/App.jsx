@@ -55,7 +55,7 @@ const spheres = [
 
 function Scene() {
   return (
-    <Canvas dpr={[1, 2]} shadows camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
+    <Canvas dpr={[1, 2]} shadows gl={{ antialias: false }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
       <color attach="background" args={['#F9F9F9']} />
       {/* <AnimatedSphere size={1} position={[0, 1, 0]} /> */}
       {spheres.map((sphere, index) =>
