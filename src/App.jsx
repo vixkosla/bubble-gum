@@ -86,7 +86,7 @@ function Scene() {
       {/* <spotLight position={[0, 3, 3]} angle={0.55} penumbra={0.24} intensity={8} castShadow /> */}
       {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
 
-      // <OrbitControls />
+      {/* <OrbitControls />*/}
       <EffectComposer disableNormalPass>
         <FXAA />
       </EffectComposer>
