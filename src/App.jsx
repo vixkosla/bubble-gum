@@ -89,6 +89,7 @@ function Scene() {
       {/* <OrbitControls />*/}
       <EffectComposer disableNormalPass>
         <FXAA />
+        <Bloom intensity={0.6}/>
       </EffectComposer>
       <Environment preset="night" intensity={0.9} blur={0.9} resolution={256}>
         <group rotation={[-Math.PI / 1, 0, 1]}>
