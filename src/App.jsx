@@ -156,7 +156,7 @@ function Shell({ sphere }) {
       const impulse = new THREE.Vector3()
         .copy(offset)
         .normalize()
-        .multiplyScalar(0.7 * (Math.pow(sphere.size, 1.5)));
+        .multiplyScalar(1.5 * (Math.pow(sphere.size * 10, 3) / Math.pow(10, 3)));
 
       // console.log('Impulse:', impulse);
       // const maxForce = 0.001; // Максимальный импульс
