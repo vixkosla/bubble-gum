@@ -42,7 +42,7 @@ const spheres = [
 
   { position: [-0.2, -0.05, 0.8], size: 0.45, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.5 }, opacity: 1, clearcoat: 1, roughness: 0.6, metalness: 0 , useTransmissionMaterial: true},
   { position: [0.35, -0.65, 2.5], size: 0.35, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0 ,useTransmissionMaterial: true },
-  { position: [0, 1, 0.2], size: 0.35, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 , useTransmissionMaterial: true},
+  { position: [0, 1, 0.2], size: 0.55, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 , useTransmissionMaterial: true},
 
   { position: [1.5, -0.5, 1], size: 0.7, color: '#8A8A8A', dCoef: { a: 0.1, b: 0.2 }, clearcoat: 0.8, roughness: 0.4, metalness: 1, useTransmissionMaterial: false },
   { position: [-1.15, -1.5, -1], size: 0.9, color: '#363636', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.1, metalness: 1 },
