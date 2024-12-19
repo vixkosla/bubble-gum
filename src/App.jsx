@@ -89,7 +89,7 @@ function Scene() {
       {/* <OrbitControls />*/}
       <EffectComposer disableNormalPass>
         <FXAA />
-        <Bloom intensity={0.6}/>
+        <Bloom intensity={0.5} luminanceThreshold={0.3}/>
       </EffectComposer>
       <Environment preset="night" intensity={0.9} blur={0.9} resolution={256}>
         <group rotation={[-Math.PI / 1, 0, 1]}>
@@ -153,7 +153,7 @@ function Shell({ sphere }) {
     // console.log(force)
 
 
-    if (force > 0.01) {
+    if (force > 0.05) {
       const impulse = new THREE.Vector3()
         .copy(offset)
         .normalize()
