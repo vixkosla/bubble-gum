@@ -50,9 +50,9 @@ const spheres = [
 
   { position: [1.2, -0.5, -1.8], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.01, b: 0.2 }, clearcoat: 0, roughness: 0.5, metalness: 0 },
   { position: [1.4, 2.3, -0.95], size: 1.05, color: 'silver', dCoef: { a: 0.4, b: 0.01 }, clearcoat: 0, roughness: 0.6, metalness: 0.8, useTransmissionMaterial: false },
-  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0, opacity: 1, roughness: 0.45, metalness: 0, bumpScale: 0.4 },
+  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, opacity: 1, roughness: 0.45, metalness: 0, bumpScale: 0.4 },
 
-  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, clearcoat: 0.1, roughness: 0.8, metalness: 0, opacity: 0.9 },
+  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, clearcoat: 0.9, roughness: 0.4, metalness: 0.2, opacity: 0.9 },
 
  // New level of spheres (increased depth and cluster aesthetics)
 
@@ -94,7 +94,7 @@ function Scene() {
       {/* <spotLight position={[0, 3, 3]} angle={0.55} penumbra={0.24} intensity={8} castShadow /> */}
       {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
 
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <EffectComposer disableNormalPass>
         <FXAA />
         <Bloom intensity={0.5} luminanceThreshold={0.3}/>
