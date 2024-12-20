@@ -41,7 +41,7 @@ const spheres = [
   { position: [0, 1, 0.2], size: 0.55, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0, useTransmissionMaterial: true },
 
   { position: [1.5, -0.5, 1], size: 0.7, color: 'grey', dCoef: { a: 0.05, b: 0.2 }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9, useTransmissionMaterial: false },
-  { position: [-1.15, -1.75, -1], size: 0.7, color: 'silver', dCoef: { a: 0.2, b: 0.001 }, clearcoat: 0, roughness: 0.55, metalness: 0.6 },
+  { position: [-1.15, -1.75, -1], size: 0.7, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.001 }, clearcoat: 0, roughness: 0.55, metalness: 0.6 },
   { position: [-1.6, 1.6, -0.8], size: 1, color: 'silver', dCoef: { a: 0.1, b: 0.1 }, roughness: 0.6, metalness: 1, useTransmissionMaterial: false },
 
   { position: [1.2, -0.5, -1.8], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.01, b: 0.2 }, clearcoat: 0, roughness: 0.5, metalness: 0 },
@@ -65,7 +65,7 @@ const spheres = [
 
 function Scene() {
   return (
-    <Canvas dpr={[1, 1.5]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
+    <Canvas dpr={[1, 1.25]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
       <color attach="background" args={['#F9F9F9']} />
       <Physics gravity={[0, 0, 0]} >
         <Pointer />
@@ -88,22 +88,22 @@ function Scene() {
         </mesh>
       </Physics>
 
-      <ambientLight color="white" intensity={0.65} />
-      <directionalLight intensity={0.7} position={[3, 3, -1]}/>
+      <ambientLight color="white" intensity={0.45} />
+      <directionalLight intensity={0.3} position={[3, 3, -1]}/>
 
-      <spotLight position={[3, 3, 3]} angle={0.55} penumbra={0.34} intensity={8} castShadow />
+      {/* <spotLight position={[3, 3, 3]} angle={0.55} penumbra={0.34} intensity={1} castShadow /> */}
       {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
 
       {/* <OrbitControls /> */}
-      <EffectComposer disableNormalPass multisampling={4}>
-        <N8AO distanceFalloff={1} aoRadius={1} intensity={3} />
+      <EffectComposer disableNormalPass multisampling={8}>
+        <N8AO distanceFalloff={1} aoRadius={1} intensity={4} />
         {/* <FXAA /> */}
-        <Bloom intensity={0.5} luminanceThreshold={0.3} />
+        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={false}/>
       </EffectComposer>
-      <Environment  intensity={0.5} blur={0.9} resolution={128}>
+      <Environment>
         <group rotation={[-Math.PI / 3, 0, 1]}>
 
-          <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[0, 2, -3]} scale={2} />
+          <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[2, 2, -3]} scale={3} />
           <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-3, 2, -2]} scale={2} />
           <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-3, -3, -3]} scale={4} />
           <Lightformer form="circle" intensity={2} rotation-y={-Math.PI / 2} position={[3, 2, 0]} scale={4} />
@@ -194,7 +194,7 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
 
   // const [material, set] = useState();
 
-  const bumpMap = useTexture("./bump.jpg");
+  const bumpMap = useTexture('./bump.jpg');
 
 
   useFrame(({ clock }) => {
@@ -211,20 +211,18 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
       {useTransmissionMaterial ? (
         <MeshTransmissionMaterial
           // color={color}
-          clearcoat={clearcoat}
+          clearcoat={0.15}
           roughness={0.3}
           thickness={1.4}
           ior={1.8}
           chromaticAberration={0.3}
           anisotropy={0.9}
           anisotropyBlur={0.9}
-          samples={16}
-          distortion={0.3}
-          distortionScale={0.1}
+          samples={4}
+          distortion={0.6}
+          distortionScale={0.2}
           temporalDistortion={0.1}
-          resolution={64}
-          attenuationColor="white"
-          attenuationDistance={0.1}
+          resolution={32}
         />
       ) : (
         <MeshDistortMaterial
