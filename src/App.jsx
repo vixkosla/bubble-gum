@@ -41,27 +41,35 @@ const spheres = [
   // { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, roughness: 0.35, metalness: 0.3, opacity: 1 },
 
   { position: [-0.2, -0.05, 0.8], size: 0.45, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.5 }, opacity: 1, clearcoat: 1, roughness: 0.6, metalness: 0 , useTransmissionMaterial: true},
-  { position: [0.35, -0.65, 2.5], size: 0.35, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0 ,useTransmissionMaterial: true },
+  { position: [0.35, -0.65, 2.5], size: 0.3, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0 ,useTransmissionMaterial: true },
   { position: [0, 1, 0.2], size: 0.55, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 , useTransmissionMaterial: true},
 
-  { position: [1.5, -0.5, 1], size: 0.7, color: '#8A8A8A', dCoef: { a: 0.1, b: 0.2 }, clearcoat: 0.8, roughness: 0.4, metalness: 1, useTransmissionMaterial: false },
-  { position: [-1.15, -1.5, -1], size: 0.9, color: '#363636', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.1, metalness: 1 },
-  { position: [-1.6, 1.6, -0.8], size: 1, color: 'silver', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.4, metalness: 1, useTransmissionMaterial: false },
+  { position: [1.5, -0.5, 1], size: 0.7, color: 'silver', dCoef: { a: 0.05, b: 0.2 }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9, useTransmissionMaterial: false },
+  { position: [-1.15, -1.75, -1], size: 0.7, color: 'silver', dCoef: { a: 0.2, b: 0.001 },clearcoat: 0, roughness: 0.55, metalness: 0.6 },
+  { position: [-1.6, 1.6, -0.8], size: 1, color: 'silver', dCoef: { a: 0.1, b: 0.1 }, roughness: 0.6, metalness: 1, useTransmissionMaterial: false },
 
-  { position: [1.2, -0.5, -1.8], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.1, b: 0.2 }, roughness: 0.5, metalness: 0 },
-  { position: [1.3, 2.2, -0.95], size: 1.25, color: 'silver', dCoef: { a: 0.2, b: 0.1 }, clearcoat: 1, roughness: 0.6, metalness: 0.8, useTransmissionMaterial: false },
-  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.15, b: 0.1 }, clearcoat: 1, opacity: 1, roughness: 0.45, metalness: 0, bumpScale: 0.4 },
+  { position: [1.2, -0.5, -1.8], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.01, b: 0.2 }, clearcoat: 0, roughness: 0.5, metalness: 0 },
+  { position: [1.4, 2.3, -0.95], size: 1.05, color: 'silver', dCoef: { a: 0.4, b: 0.01 }, clearcoat: 0, roughness: 0.6, metalness: 0.8, useTransmissionMaterial: false },
+  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0, opacity: 1, roughness: 0.45, metalness: 0, bumpScale: 0.4 },
 
-  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, clearcoat: 1, roughness: 0.5, metalness: 0 },
+  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, clearcoat: 0.1, roughness: 0.8, metalness: 0, opacity: 0.9 },
 
+ // New level of spheres (increased depth and cluster aesthetics)
 
+  { position: [-1.15, 0.5, -10.3], size: 4.4, color: 'white', dCoef: { a: 0.0, b: 0.0 }, clearcoat: 0, opacity: 0.8, roughness: 0.45, metalness: 0, bumpScale: 0 },
+
+  // { position: [0.5, 0.7, -7], size: 0.9, color: '#DCDCDC', dCoef: { a: 0.2, b: 0.15 }, roughness: 0.35, metalness: 0.1 },
+  // { position: [-0.6, -0.3, -7.2], size: 0.6, color: '#BEBEBE', dCoef: { a: 0.1, b: 0.25 }, roughness: 0.4, metalness: 0.2 },
+  // { position: [-1.1, 1.0, -7.5], size: 1.1, color: '#D3D3D3', dCoef: { a: 0.3, b: 0.1 }, roughness: 0.25, metalness: 0.15 },
+  // { position: [1.2, -0.8, -7.8], size: 0.7, color: '#C0C0C0', dCoef: { a: 0.25, b: 0.2 }, roughness: 0.3, metalness: 0.1 },
+  // { position: [0, 0.5, -8], size: 1.2, color: '#F5F5F5', dCoef: { a: 0.2, b: 0.2 }, roughness: 0.5, metalness: 0.25 }
 
 
 ]
 
 function Scene() {
   return (
-    <Canvas dpr={[1, 2]} shadows gl={{ antialias: false }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
+    <Canvas dpr={[1, 2]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
       <color attach="background" args={['#F9F9F9']} />
       <Physics gravity={[0, 0, 0]} >
         <Pointer />
@@ -80,19 +88,19 @@ function Scene() {
         )}
       </Physics>
 
-      <ambientLight intensity={0.65} />
-      <directionalLight intensity={1.5}/>
+      <ambientLight color="#8A8A8A" greyintensity={0.65} />
+      <directionalLight intensity={1.2}/>
 
       {/* <spotLight position={[0, 3, 3]} angle={0.55} penumbra={0.24} intensity={8} castShadow /> */}
       {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
 
-      {/* <OrbitControls />*/}
+      <OrbitControls />
       <EffectComposer disableNormalPass>
         <FXAA />
         <Bloom intensity={0.5} luminanceThreshold={0.3}/>
       </EffectComposer>
-      <Environment preset="night" intensity={0.9} blur={0.9} resolution={256}>
-        <group rotation={[-Math.PI / 1, 0, 1]}>
+      <Environment preset="night" intensity={0.1} blur={0.9} resolution={128}>
+        <group rotation={[-Math.PI / 2, 0, 1]}>
 
           <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -5]} scale={4} />
           <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={2} />
@@ -111,15 +119,15 @@ function Pointer({ vec = new THREE.Vector3() }) {
     const target = new THREE.Vector3(
       (mouse.x * viewport.width) / 2,
       (mouse.y * viewport.height) / 2,
-      0
+      0.5
     );
-    vec.lerp(target, 0.05);
-    ref.current?.setNextKinematicTranslation(vec);
+    vec.lerp(target, 0.1);
+    ref.current?.setTranslation(vec);
   })
 
   return (
-    <RigidBody restitution={0.01} ref={ref} position={[10, 10, 10]} type="kinematicPosition" colliders={false}>
-      <BallCollider args={[0.8]} />
+    <RigidBody mass={0.01} restitution={0.1} ref={ref} position={[10, 10, 10]} linearDamping={4}  colliders={false}>
+      <BallCollider args={[1.5]} />
     </RigidBody>
   )
 }
@@ -153,14 +161,14 @@ function Shell({ sphere }) {
     // console.log(force)
 
 
-    if (force > 0.05) {
+    if (force > 0.15) {
       const impulse = new THREE.Vector3()
         .copy(offset)
         .normalize()
-        .multiplyScalar(1.5 * (Math.pow(sphere.size * 10, 3) / Math.pow(10, 3)));
+        .multiplyScalar(0.5 * (Math.sqrt(Math.pow(sphere.size, 2))));
 
       // console.log('Impulse:', impulse);
-      // const maxForce = 0.001; // Максимальный импульс
+      // const maxForce = 18 * (Math.pow(sphere.size * 10, 2) / Math.pow(10, 4)) ; // Максимальный импульс
       // if (impulse.length() > maxForce) {
       //   impulse.setLength(maxForce);
       // }
@@ -170,7 +178,7 @@ function Shell({ sphere }) {
   })
 
   return (
-    <RigidBody restitution={0.01} ref={api} position={sphere.position} linearDamping={4.7} angularDamping={0.8}>
+    <RigidBody restitution={0} type="dynamic" mass={((Math.pow(sphere.size, 2)))} ref={api} position={sphere.position} linearDamping={1.55} angularDamping={0.8}>
       {/* <BallCollider args={[sphere.size]}/> */}
       <AnimatedSphere ref={meshRef} {...sphere} />
       {/* <pointLight intensity={1} distance={1.5} color={sphere.color} /> */}
@@ -179,7 +187,7 @@ function Shell({ sphere }) {
   )
 }
 
-const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 1, bumpScale = 1, useTransmissionMaterial = false  }, ref) => {
+const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 0.4, bumpScale = 1, useTransmissionMaterial = false  }, ref) => {
   const materialRef = useRef();
   // const meshRef = useRef();
 
@@ -203,17 +211,19 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
           <MeshTransmissionMaterial
             // color={color}
             clearcoat={clearcoat}
-            roughness={roughness}
-            thickness={0.5}
-            ior={1.5}
-            chromaticAberration={0.1}
-            anisotropy={0.1}
-            anisotropyBlur={0.1}
-            samples={8}
-            distortion={0.1}
-            distortionScale={0.5}
-            temporalDistortion={0.3}
+            roughness={0.3}
+            thickness={1.4}
+            ior={1.8}
+            chromaticAberration={0.3}
+            anisotropy={0.9}
+            anisotropyBlur={0.9}
+            samples={16}
+            distortion={0.3}
+            distortionScale={0.1}
+            temporalDistortion={0.1}
             resolution={64}
+            attenuationColor="white"
+            attenuationDistance={0.1}
           />
         ) : (
           <MeshDistortMaterial
@@ -225,7 +235,7 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
             metalness={metalness}
             roughness={roughness}
             clearcoat={clearcoat}
-            clearcoatRoughness={1}
+            clearcoatRoughness={0.6}
             transparent={transparent}
             opacity={opacity}
           />
