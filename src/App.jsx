@@ -126,7 +126,7 @@ function Pointer({ vec = new THREE.Vector3() }) {
   })
 
   return (
-    <RigidBody mass={0.01} restitution={0.1} ref={ref} position={[10, 10, 10]} linearDamping={4}  colliders={false}>
+    <RigidBody mass={0.01} restitution={0.1} ref={ref} position={[100, 100, 10]} linearDamping={4}  colliders={false}>
       <BallCollider args={[1.5]} />
     </RigidBody>
   )
