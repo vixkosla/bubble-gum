@@ -44,7 +44,7 @@ const spheres = [
   { position: [0.35, -0.65, 2.5], size: 0.3, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0 ,useTransmissionMaterial: true },
   { position: [0, 1, 0.2], size: 0.55, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0 , useTransmissionMaterial: true},
 
-  { position: [1.5, -0.5, 1], size: 0.7, color: 'silver', dCoef: { a: 0.05, b: 0.2 }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9, useTransmissionMaterial: false },
+  { position: [1.5, -0.5, 1], size: 0.7, color: 'grey', dCoef: { a: 0.05, b: 0.2 }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9, useTransmissionMaterial: false },
   { position: [-1.15, -1.75, -1], size: 0.7, color: 'silver', dCoef: { a: 0.2, b: 0.001 },clearcoat: 0, roughness: 0.55, metalness: 0.6 },
   { position: [-1.6, 1.6, -0.8], size: 1, color: 'silver', dCoef: { a: 0.1, b: 0.1 }, roughness: 0.6, metalness: 1, useTransmissionMaterial: false },
 
