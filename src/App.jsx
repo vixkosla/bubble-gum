@@ -84,7 +84,7 @@ function Scene() {
         )}
         <mesh position={[-1.15, 0.5, -10.3]}>
           <sphereGeometry  args={[4.4, 64, 64]}/>
-          <meshStandardMaterial  opacity={[0.5]} color="white" />
+          <meshStandardMaterial color="white" />
         </mesh>
       </Physics>
 
