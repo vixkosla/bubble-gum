@@ -72,7 +72,7 @@ function Scene() {
   return (
     <Canvas dpr={[1, 1.25]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
       <color attach="background" args={['#F9F9F9']} />
-      <Physics gravity={[0, 0, 0]} friction={0.5} >
+      <Physics gravity={[0, 0, 0]} friction={0.1} >
         <Pointer />
 
         {spheres.map((sphere, index) =>
@@ -88,12 +88,12 @@ function Scene() {
       <directionalLight intensity={0.3} position={[3, 3, -1]} />
 
       {/* <OrbitControls /> */}
-      <EffectComposer disableNormalPass multisampling={8}>
-        <N8AO distanceFalloff={1} aoRadius={1} intensity={4} />
+      <EffectComposer disableNormalPass multisampling={16}>
+        <N8AO distanceFalloff={3} aoRadius={2} intensity={5} />
         {/* <FXAA /> */}
-        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={false} />
+        {/* <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={false} /> */}
       </EffectComposer>
-      <Environment>
+      <Environment resolution={64}>
         <group rotation={[-Math.PI / 3, 0, 1]}>
 
           <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[2, 2, -3]} scale={3} />
@@ -120,7 +120,7 @@ function Pointer({ vec = new THREE.Vector3() }) {
   })
 
   return (
-    <RigidBody mass={0.01} restitution={0.1} ref={ref} position={[100, 100, 10]} linearDamping={4} colliders={false}>
+    <RigidBody mass={1} type="dynamic" restitution={2.5} ref={ref} position={[100, 100, 10]} linearDamping={0} colliders={false}>
       <BallCollider args={[1.5]} />
     </RigidBody>
   )
@@ -129,40 +129,43 @@ function Pointer({ vec = new THREE.Vector3() }) {
 function Shell({ sphere, r = THREE.MathUtils.randFloatSpread }) {
   const api = useRef()
   const meshRef = useRef();
-  const pos = useMemo(() => [r(16), r(5), r(1)], [])
+  const pos = useMemo(() => [r(10), r(10), r(5)], [])
+  const size = useMemo(() => (Math.min(Math.random() * 0.9, 0.1) + Math.min(Math.random() * 0.85, 0.2) + 1.08 * (window.innerWidth / 1920 )))
 
-  useFrame(({ delta, state }) => {
+  useFrame(( state, delta ) => {
 
-    delta = Math.min(delta, 0.1)
+    // console.log(delta)
+
+    // delta = Math.min(delta, 0.1)
 
     // console.log(force)
 
 
     // const lupin = new THREE.Vector3( 0.5 * (Math.sqrt(Math.pow(sphere.size, 2))), 0.1, 0.1 * delta )
-    const position = api.current?.translation()
+    const position = new THREE.Vector3().copy(api.current?.translation())
 
-    console.log(delta)
 
     const impulse = new THREE.Vector3()
       .copy(position)
-      .normalize()
-      .negate()
-      // .multiplyScalar(delta * 0.00002)
-      .multiplyScalar( 1.5 * Math.sqrt(Math.pow(sphere.size, 3)))
-      .multiply(new THREE.Vector3(0.6, 1, 1.8));
+      // .normalize()
 
-    if (3 > impulse.length() > 0.05) {
+    .multiply(new THREE.Vector3(0.03, 0.1, 0.18))
+
+      // .normalize()
+      .negate()
+      .multiplyScalar( 10.8 * delta)
+    // .multiplyScalar( 1.5 * Math.sqrt(Math.pow(sphere.size, 3)))
+
+    if (impulse.length() > 0.2) {
       api.current?.applyImpulse(impulse, true);
 
     }
-
-
   })
 
   return (
-    <RigidBody restitution={0.5} type="dynamic" mass={((Math.pow(sphere.size, 2)))} ref={api} position={pos} colliders={false} linearDamping={1.55} angularDamping={0.8}>
-      <BallCollider args={[sphere.size * 1.1]} />
-      <AnimatedSphere ref={meshRef} {...sphere} />
+    <RigidBody restitution={1.1} type="dynamic" mass={((Math.pow(size, 1)))} ref={api} position={pos} colliders={false} linearDamping={0.1} angularDamping={0.1}>
+      <BallCollider args={[size * 1.05]} />
+      <AnimatedSphere ref={meshRef} {...sphere} size={size} />
     </RigidBody>
 
   )
