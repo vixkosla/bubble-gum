@@ -1,5 +1,5 @@
 // import {  } from 'react'
-import * as THREE from 'three'
+import { Vector3 } from 'three'
 
 import { useRef, forwardRef } from 'react';
 
@@ -10,7 +10,6 @@ import { OrbitControls, MeshDistortMaterial, MeshTransmissionMaterial, Environme
 import {
   EffectComposer, N8AO,
   Bloom,
-  Noise
 } from '@react-three/postprocessing'
 
 import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
@@ -95,10 +94,10 @@ function Scene() {
       {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
 
       {/* <OrbitControls /> */}
-      <EffectComposer disableNormalPass multisampling={8}>
+      <EffectComposer disableNormalPass multisampling={0}>
         <N8AO distanceFalloff={1} aoRadius={1} intensity={4} />
         {/* <FXAA /> */}
-        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={false}/>
+        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={true}/>
       </EffectComposer>
       <Environment>
         <group rotation={[-Math.PI / 3, 0, 1]}>
@@ -113,16 +112,17 @@ function Scene() {
   )
 }
 
-function Pointer({ vec = new THREE.Vector3() }) {
+function Pointer({ vec = new Vector3() }) {
   const ref = useRef()
+  const target = useRef(new Vector3())
 
   useFrame(({ mouse, viewport }) => {
-    const target = new THREE.Vector3(
+    target.current.set(
       (mouse.x * viewport.width) / 2,
       (mouse.y * viewport.height) / 2,
       0.5
     );
-    vec.lerp(target, 0.1);
+    vec.lerp(target.current, 0.1);
     ref.current?.setTranslation(vec);
   })
 
@@ -137,44 +137,34 @@ function Shell({ sphere }) {
   const api = useRef()
   const meshRef = useRef();
 
-  useFrame(({ delta, state }) => {
+  const _currentPosition = useRef(new Vector3());
+  const _posVector = useRef(new Vector3(...sphere.position));
+  const _offset = useRef(new Vector3());
+  const _impulse = useRef(new Vector3());
+
+  useFrame(({ delta }) => {
 
     delta = Math.min(delta, 0.1)
 
-    const currentPosition = new THREE.Vector3();
-
     if (meshRef.current) {
-      meshRef.current.getWorldPosition(currentPosition)
+      meshRef.current.getWorldPosition(_currentPosition.current)
     }
 
-    const posVector = new THREE.Vector3(...sphere.position)
-
-    const offset = new THREE.Vector3(
-      posVector.x - currentPosition.x,
-      posVector.y - currentPosition.y,
-      posVector.z - currentPosition.z,
+    _offset.current.set(
+      _posVector.current.x - _currentPosition.current.x,
+      _posVector.current.y - _currentPosition.current.y,
+      _posVector.current.z - _currentPosition.current.z,
     )
 
-    // console.log(offset)
-
-    const force = offset.length()
-
-    // console.log(force)
-
+    const force = _offset.current.length()
 
     if (force > 0.15) {
-      const impulse = new THREE.Vector3()
-        .copy(offset)
+      _impulse.current
+        .copy(_offset.current)
         .normalize()
-        .multiplyScalar(0.5 * (Math.sqrt(Math.pow(sphere.size, 2))));
+        .multiplyScalar(0.5 * sphere.size);
 
-      // console.log('Impulse:', impulse);
-      // const maxForce = 18 * (Math.pow(sphere.size * 10, 2) / Math.pow(10, 4)) ; // Максимальный импульс
-      // if (impulse.length() > maxForce) {
-      //   impulse.setLength(maxForce);
-      // }
-
-      api.current?.applyImpulse(impulse, true)
+      api.current?.applyImpulse(_impulse.current, true)
     }
   })
 
@@ -218,7 +208,7 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
           chromaticAberration={0.3}
           anisotropy={0.9}
           anisotropyBlur={0.9}
-          samples={4}
+          samples={2}
           distortion={0.6}
           distortionScale={0.2}
           temporalDistortion={0.1}
