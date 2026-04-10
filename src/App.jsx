@@ -41,30 +41,30 @@ const spheres = [
   { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, roughness: 0.45, metalness: 0, bumpScale: 0.4, isStatic: true },
   { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
-  // --- Bubble clusters (physics, high damping scaled to size) ---
+  // --- Bubble clusters ---
   // Group A: right-center gap
-  { position: [0.9,  0.1,  2.0], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [1.2,  -0.2, 2.3], size: 0.15, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [0.7,  -0.3, 1.8], size: 0.12, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.1,  0.3,  1.6], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.4,  -0.1, 2.0], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.85, -0.5, 2.2], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.25, 0.5,  1.9], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.9,  0.1,  2.0], size: 0.50, useTransmissionMaterial: true, transmissionRes: 64 },
+  { position: [1.2,  -0.2, 2.3], size: 0.38, useTransmissionMaterial: true, transmissionRes: 64 },
+  { position: [0.7,  -0.3, 1.8], size: 0.30, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [1.1,  0.3,  1.6], size: 0.25, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [1.4,  -0.1, 2.0], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [0.85, -0.5, 2.2], size: 0.18, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [1.25, 0.5,  1.9], size: 0.15, useTransmissionMaterial: true, transmissionRes: 32 },
 
   // Group B: upper area
-  { position: [0.5,  1.6,  1.2], size: 0.18, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [0.8,  1.9,  0.8], size: 0.13, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.3,  2.1,  1.0], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.65, 2.3,  0.5], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.15, 1.8,  1.3], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.5,  1.6,  1.2], size: 0.45, useTransmissionMaterial: true, transmissionRes: 64 },
+  { position: [0.8,  1.9,  0.8], size: 0.33, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [0.3,  2.1,  1.0], size: 0.25, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [0.65, 2.3,  0.5], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [0.15, 1.8,  1.3], size: 0.18, useTransmissionMaterial: true, transmissionRes: 32 },
 
   // Group C: lower-left
-  { position: [-1.0, -0.9, 2.0], size: 0.16, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [-1.4, -0.5, 1.8], size: 0.12, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [-0.8, -1.2, 2.3], size: 0.09, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [-1.2, -1.0, 1.5], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [-0.6, -0.7, 2.1], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [-1.5, -1.3, 1.9], size: 0.05, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [-1.0, -0.9, 2.0], size: 0.40, useTransmissionMaterial: true, transmissionRes: 64 },
+  { position: [-1.4, -0.5, 1.8], size: 0.30, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-0.8, -1.2, 2.3], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-1.2, -1.0, 1.5], size: 0.18, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-0.6, -0.7, 2.1], size: 0.15, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-1.5, -1.3, 1.9], size: 0.12, useTransmissionMaterial: true, transmissionRes: 32 },
 ]
 
 function Scene() {
@@ -164,7 +164,7 @@ function Shell({ sphere }) {
   })
 
   return (
-    <RigidBody restitution={0} type="dynamic" mass={Math.pow(sphere.size, 2)} ref={api} position={sphere.position} linearDamping={Math.max(1.55, 0.3 / sphere.size)} angularDamping={Math.max(0.8, 0.15 / sphere.size)}>
+    <RigidBody restitution={0} type="dynamic" mass={Math.pow(sphere.size, 2)} ref={api} position={sphere.position} linearDamping={1.55} angularDamping={0.8}>
       <AnimatedSphere ref={meshRef} {...sphere} />
     </RigidBody>
   )
