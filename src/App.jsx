@@ -41,22 +41,23 @@ const spheres = [
   { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, roughness: 0.45, metalness: 0, bumpScale: 0.4, isStatic: true },
   { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
-  // --- Colored accent spheres — scattered, physics, verified no-overlap ---
-  // Zone: right-center (between main cluster and front)
-  { position: [ 0.60,  0.20, 2.00], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 1.00, -0.20, 2.20], size: 0.26, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
-  { position: [ 0.80, -0.50, 1.80], size: 0.22, color: '#AA00FF', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
-  { position: [ 0.50,  0.70, 1.80], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.90,  0.40, 1.40], size: 0.22, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
-  { position: [ 1.20,  0.10, 1.80], size: 0.20, color: '#AA00FF', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
-  // Zone: upper area
-  { position: [ 0.40,  1.40, 1.20], size: 0.22, color: '#AA00FF', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
-  { position: [ 0.70,  1.60, 0.80], size: 0.24, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
+
+  // --- Accent bubbles — glass/transmission, scattered, physics ---
+  // Zone: right-center
+  { position: [ 0.60,  0.20, 2.00], size: 0.24, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 1.00, -0.20, 2.20], size: 0.26, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 0.80, -0.50, 1.80], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 0.50,  0.70, 1.80], size: 0.24, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 0.90,  0.40, 1.40], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 1.20,  0.10, 1.80], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32 },
+  // Zone: upper
+  { position: [ 0.40,  1.40, 1.20], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 0.70,  1.60, 0.80], size: 0.24, useTransmissionMaterial: true, transmissionRes: 32 },
   // Zone: left-center
-  { position: [-0.60,  0.80, 1.40], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
-  { position: [-0.80,  0.50, 1.00], size: 0.22, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
-  { position: [-0.40, -0.50, 1.60], size: 0.20, color: '#00C853', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.20, -0.70, 1.30], size: 0.22, color: '#AA00FF', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
+  { position: [-0.60,  0.80, 1.40], size: 0.24, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-0.80,  0.50, 1.00], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [-0.40, -0.50, 1.60], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [ 0.20, -0.70, 1.30], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
 ]
 
 function Scene() {
@@ -88,10 +89,10 @@ function Scene() {
       </EffectComposer>
       <Environment>
         <group rotation={[-Math.PI / 3, 0, 1]}>
-          <Lightformer form="circle" intensity={2} rotation-x={Math.PI / 2} position={[2, 2, -3]} scale={3} />
-          <Lightformer form="circle" intensity={1} rotation-y={Math.PI / 2} position={[-3, 2, -2]} scale={2} />
-          <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-3, -3, -3]} scale={4} />
-          <Lightformer form="circle" intensity={2} rotation-y={-Math.PI / 2} position={[3, 2, 0]} scale={4} />
+          <Lightformer form="circle" color="white"   intensity={2} rotation-x={Math.PI / 2}  position={[2, 2, -3]}   scale={3} />
+          <Lightformer form="circle" color="white"   intensity={1} rotation-y={Math.PI / 2}  position={[-3, 2, -2]}  scale={2} />
+          <Lightformer form="circle" color="white"   intensity={2} rotation-y={Math.PI / 2}  position={[-3, -3, -3]} scale={4} />
+          <Lightformer form="circle" color="white"   intensity={2} rotation-y={-Math.PI / 2} position={[3, 2, 0]}    scale={4} />
         </group>
       </Environment>
     </Canvas>
@@ -162,7 +163,7 @@ function Shell({ sphere }) {
   )
 }
 
-function StaticSphere({ size, position, color, roughness, metalness, clearcoat, opacity = 1, bumpScale = 1, dCoef = { a: 0.05, b: 0.05 }, useTransmissionMaterial = false, transmissionRes = 64 }) {
+function StaticSphere({ size, position, color, roughness, metalness, clearcoat, opacity = 1, bumpScale = 1, dCoef = { a: 0.05, b: 0.05 }, useTransmissionMaterial = false, transmissionRes = 64, emissive = '#000000', emissiveIntensity = 0 }) {
   const bumpMap = useTexture('./bump.jpg')
   const res = getSphRes(size)
   return (
@@ -194,6 +195,8 @@ function StaticSphere({ size, position, color, roughness, metalness, clearcoat, 
           clearcoatRoughness={0.6}
           transparent={opacity < 1}
           opacity={opacity}
+          emissive={emissive}
+          emissiveIntensity={emissiveIntensity}
         />
       )}
     </mesh>
