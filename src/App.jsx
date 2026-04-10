@@ -41,25 +41,30 @@ const spheres = [
   { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, roughness: 0.45, metalness: 0, bumpScale: 0.4, isStatic: true },
   { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
-  // --- Cloud of small transmission bubbles (right-center gap) ---
-  { position: [0.8,  0.55, 1.8], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [1.1,  0.2,  2.2], size: 0.17, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [0.65, -0.15, 2.0],size: 0.14, useTransmissionMaterial: true, transmissionRes: 32 },
-  { position: [1.3,  -0.05, 1.5],size: 0.13, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.9,  -0.45, 2.5],size: 0.11, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.4,  0.35, 2.0], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.6,  0.3,  2.5], size: 0.11, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.75, -0.65, 1.5],size: 0.09, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.2,  -0.45, 2.8],size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.0,  0.45, 2.8], size: 0.09, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.5,  -0.25, 2.3],size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.55, -0.85, 2.2],size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.3,  0.5,  1.2], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.85, -1.0, 1.8], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.1,  -0.75, 1.3],size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.6,  -0.55, 1.8],size: 0.05, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [0.95, -1.15, 2.1],size: 0.05, useTransmissionMaterial: true, transmissionRes: 16 },
-  { position: [1.4,  -0.8, 2.5], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
+  // --- Bubble clusters (static, no physics) ---
+  // Group A: right-center gap (original area)
+  { position: [0.9,  0.1,  2.0], size: 0.20, useTransmissionMaterial: true, transmissionRes: 32, isStatic: true },
+  { position: [1.2,  -0.2, 2.3], size: 0.15, useTransmissionMaterial: true, transmissionRes: 32, isStatic: true },
+  { position: [0.7,  -0.3, 1.8], size: 0.12, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [1.1,  0.3,  1.6], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [1.4,  -0.1, 2.0], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [0.85, -0.5, 2.2], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [1.25, 0.5,  1.9], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+
+  // Group B: upper area (near top transmission sphere)
+  { position: [0.5,  1.6,  1.2], size: 0.18, useTransmissionMaterial: true, transmissionRes: 32, isStatic: true },
+  { position: [0.8,  1.9,  0.8], size: 0.13, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [0.3,  2.1,  1.0], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [0.65, 2.3,  0.5], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [0.15, 1.8,  1.3], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+
+  // Group C: lower-left (near white static sphere)
+  { position: [-1.0, -0.9, 2.0], size: 0.16, useTransmissionMaterial: true, transmissionRes: 32, isStatic: true },
+  { position: [-1.4, -0.5, 1.8], size: 0.12, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [-0.8, -1.2, 2.3], size: 0.09, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [-1.2, -1.0, 1.5], size: 0.07, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [-0.6, -0.7, 2.1], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
+  { position: [-1.5, -1.3, 1.9], size: 0.05, useTransmissionMaterial: true, transmissionRes: 16, isStatic: true },
 ]
 
 function Scene() {
@@ -72,7 +77,7 @@ function Scene() {
           <Shell key={index} sphere={{ ...sphere, index }} />
         )}
         <mesh position={[-1.15, 0.5, -10.3]}>
-          <sphereGeometry args={[4.4, 16, 16]} />
+          <sphereGeometry args={[4.4, 64, 64]} />
           <meshStandardMaterial color="white" />
         </mesh>
       </Physics>
@@ -165,25 +170,40 @@ function Shell({ sphere }) {
   )
 }
 
-function StaticSphere({ size, position, color, roughness, metalness, clearcoat, opacity = 1, bumpScale = 1, dCoef = { a: 0.05, b: 0.05 } }) {
+function StaticSphere({ size, position, color, roughness, metalness, clearcoat, opacity = 1, bumpScale = 1, dCoef = { a: 0.05, b: 0.05 }, useTransmissionMaterial = false, transmissionRes = 64 }) {
   const bumpMap = useTexture('./bump.jpg')
   const res = getSphRes(size)
   return (
     <mesh position={position} castShadow receiveShadow>
       <sphereGeometry args={[size, res, res]} />
-      <MeshDistortMaterial
-        color={color}
-        distort={dCoef.b}
-        speed={0}
-        bumpMap={bumpMap}
-        bumpScale={bumpScale}
-        metalness={metalness}
-        roughness={roughness}
-        clearcoat={clearcoat}
-        clearcoatRoughness={0.6}
-        transparent={opacity < 1}
-        opacity={opacity}
-      />
+      {useTransmissionMaterial ? (
+        <MeshTransmissionMaterial
+          roughness={0.05}
+          thickness={0.6}
+          ior={1.4}
+          chromaticAberration={0.5}
+          anisotropy={0}
+          envMapIntensity={0.15}
+          samples={1}
+          distortion={0.08}
+          temporalDistortion={0}
+          resolution={transmissionRes}
+        />
+      ) : (
+        <MeshDistortMaterial
+          color={color}
+          distort={dCoef.b}
+          speed={0}
+          bumpMap={bumpMap}
+          bumpScale={bumpScale}
+          metalness={metalness}
+          roughness={roughness}
+          clearcoat={clearcoat}
+          clearcoatRoughness={0.6}
+          transparent={opacity < 1}
+          opacity={opacity}
+        />
+      )}
     </mesh>
   )
 }
