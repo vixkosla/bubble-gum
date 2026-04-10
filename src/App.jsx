@@ -25,10 +25,10 @@ function getSphRes(size) {
 }
 
 const spheres = [
-  // --- Transmission (glass/bubble) ---
-  { position: [-0.2, -0.05, 0.8],  size: 0.45, useTransmissionMaterial: true, transmissionRes: 128 },
-  { position: [0.35, -0.65, 2.5],  size: 0.3,  useTransmissionMaterial: true, transmissionRes: 128 },
-  { position: [0, 1, 0.2],          size: 0.55, useTransmissionMaterial: true, transmissionRes: 128 },
+  // --- Transmission (glass/bubble) — front layer ---
+  { position: [-0.2, -0.05, 3.2],  size: 0.45, useTransmissionMaterial: true, transmissionRes: 128 },
+  { position: [0.35, -0.65, 3.8],  size: 0.3,  useTransmissionMaterial: true, transmissionRes: 128 },
+  { position: [0, 1, 3.5],          size: 0.55, useTransmissionMaterial: true, transmissionRes: 128 },
 
   // --- Metallic/matte ---
   { position: [1.5, -0.5, 1],    size: 0.7,  color: 'grey',    dCoef: { a: 0.05, b: 0.2  }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9 },
