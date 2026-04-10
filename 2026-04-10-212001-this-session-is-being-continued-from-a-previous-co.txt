@@ -1,0 +1,18 @@
+ ▐▛███▜▌   Claude Code v2.1.87
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    ~/projects/library/bubble-gum
+
+✻ Conversation compacted (ctrl+o for history)
+
+  ⎿  Referenced file src/App.jsx
+  ⎿  Read ../../../.claude/projects/-home-vixkosla-projects-library-bubble-gum/m
+     emory/feedback.md (12 lines)
+  ⎿  Read ../../../.claude/projects/-home-vixkosla-projects-library-bubble-gum/m
+     emory/user.md (8 lines)
+  ⎿  Read ../../../.claude/projects/-home-vixkosla-projects-library-bubble-gum/m
+     emory/project_bubble_gum.md (40 lines)
+  ⎿  Read ../../../CLAUDE.md (96 lines)
+  ⎿  You've hit your limit · resets 11pm (Europe/Moscow)
+     /upgrade or /extra-usage to finish what you’re working on.
+
+✻ Worked for 3m 21s
