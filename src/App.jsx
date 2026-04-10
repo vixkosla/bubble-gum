@@ -42,19 +42,19 @@ const spheres = [
   { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
 
-  // --- Accent spheres: rose + teal metallic, scattered physics ---
-  { position: [ 0.60,  0.20, 2.00], size: 0.24, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 1.00, -0.20, 2.20], size: 0.26, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.80, -0.50, 1.80], size: 0.22, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.50,  0.70, 1.80], size: 0.24, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.90,  0.40, 1.40], size: 0.22, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 1.20,  0.10, 1.80], size: 0.20, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.40,  1.40, 1.20], size: 0.22, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.70,  1.60, 0.80], size: 0.24, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [-0.60,  0.80, 1.40], size: 0.24, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [-0.80,  0.50, 1.00], size: 0.22, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [-0.40, -0.50, 1.60], size: 0.20, color: '#E91E8C', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
-  { position: [ 0.20, -0.70, 1.30], size: 0.22, color: '#00BCD4', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.12, clearcoat: 1.0 },
+  // --- Accent spheres: 7-color palette, varied sizes, candy/jewel material ---
+  { position: [ 0.60,  0.20, 2.00], size: 0.30, color: '#E91E8C', emissive: '#E91E8C', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 1.00, -0.20, 2.20], size: 0.34, color: '#00C853', emissive: '#00C853', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 0.80, -0.50, 1.80], size: 0.20, color: '#FFD600', emissive: '#FFD600', emissiveIntensity: 0.20, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.25, clearcoat: 0.5 },
+  { position: [ 0.50,  0.70, 1.80], size: 0.36, color: '#AA00FF', emissive: '#AA00FF', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 0.90,  0.40, 1.40], size: 0.18, color: '#00BCD4', emissive: '#00BCD4', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 1.20,  0.10, 1.80], size: 0.24, color: '#FF6D00', emissive: '#FF6D00', emissiveIntensity: 0.20, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.25, clearcoat: 0.5 },
+  { position: [ 0.40,  1.40, 1.20], size: 0.28, color: '#E91E8C', emissive: '#E91E8C', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 0.70,  1.60, 0.80], size: 0.16, color: '#00C853', emissive: '#00C853', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [-0.60,  0.80, 1.40], size: 0.32, color: '#AA00FF', emissive: '#AA00FF', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [-0.80,  0.50, 1.00], size: 0.22, color: '#FFD600', emissive: '#FFD600', emissiveIntensity: 0.20, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.25, clearcoat: 0.5 },
+  { position: [-0.40, -0.50, 1.60], size: 0.18, color: '#00BCD4', emissive: '#00BCD4', emissiveIntensity: 0.18, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.30, clearcoat: 0.5 },
+  { position: [ 0.20, -0.70, 1.30], size: 0.26, color: '#FF6D00', emissive: '#FF6D00', emissiveIntensity: 0.20, dCoef: { a: 0.05, b: 0.08 }, metalness: 0.1, roughness: 0.25, clearcoat: 0.5 },
 
   // --- Background color spheres (large, semi-transparent, compositional) ---
   { position: [ 1.5,  0.0, -4.5], size: 1.2, color: '#E91E8C', emissive: '#E91E8C', emissiveIntensity: 0.4, dCoef: { a: 0, b: 0.08 }, roughness: 0.7, metalness: 0, clearcoat: 0, opacity: 0.45, isStatic: true },
@@ -93,8 +93,8 @@ function Scene() {
         <group rotation={[-Math.PI / 3, 0, 1]}>
           <Lightformer form="circle" color="white"   intensity={2} rotation-x={Math.PI / 2}  position={[2, 2, -3]}   scale={3} />
           <Lightformer form="circle" color="white"   intensity={1} rotation-y={Math.PI / 2}  position={[-3, 2, -2]}  scale={2} />
-          <Lightformer form="circle" color="#E91E8C" intensity={0.35} rotation-y={Math.PI / 2}  position={[-3, -3, -3]} scale={4} />
-          <Lightformer form="circle" color="#00BCD4" intensity={0.35} rotation-y={-Math.PI / 2} position={[3, 2, 0]}    scale={4} />
+          <Lightformer form="circle" color="#AA00FF" intensity={0.3} rotation-y={Math.PI / 2}  position={[-3, -3, -3]} scale={4} />
+          <Lightformer form="circle" color="#00C853" intensity={0.3} rotation-y={-Math.PI / 2} position={[3, 2, 0]}    scale={4} />
         </group>
       </Environment>
     </Canvas>
@@ -205,7 +205,7 @@ function StaticSphere({ size, position, color, roughness, metalness, clearcoat, 
   )
 }
 
-const AnimatedSphere = forwardRef(({ size, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 0.4, bumpScale = 1, useTransmissionMaterial = false, transmissionRes = 64 }, ref) => {
+const AnimatedSphere = forwardRef(({ size, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 0.4, bumpScale = 1, useTransmissionMaterial = false, transmissionRes = 64, emissive = '#000000', emissiveIntensity = 0 }, ref) => {
   const materialRef = useRef()
   const bumpMap = useTexture('./bump.jpg')
   const res = getSphRes(size)
@@ -246,6 +246,8 @@ const AnimatedSphere = forwardRef(({ size, color, dCoef, index, transparent = tr
           clearcoatRoughness={0.6}
           transparent={transparent}
           opacity={opacity}
+          emissive={emissive}
+          emissiveIntensity={emissiveIntensity}
         />
       )}
     </mesh>
