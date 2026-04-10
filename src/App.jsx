@@ -1,109 +1,98 @@
-// import {  } from 'react'
 import { Vector3 } from 'three'
-
 import { useRef, forwardRef } from 'react';
-
 import { Canvas, useFrame } from '@react-three/fiber'
-
-import { OrbitControls, MeshDistortMaterial, MeshTransmissionMaterial, Environment, Lightformer, useTexture } from '@react-three/drei'
-
-import {
-  EffectComposer, N8AO,
-  Bloom,
-} from '@react-three/postprocessing'
-
+import { MeshDistortMaterial, MeshTransmissionMaterial, Environment, Lightformer, useTexture } from '@react-three/drei'
+import { EffectComposer, N8AO, Bloom, FXAA } from '@react-three/postprocessing'
 import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
-
-
 import './App.css'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div className="container-canvas">
-        <Scene />
-      </div>
-    </>
+    <div className="container-canvas">
+      <Scene />
+    </div>
   )
 }
 
-// sphere resolution
-const sphRes = 64;
+// Adaptive resolution based on sphere size
+function getSphRes(size) {
+  if (size < 0.1)  return 8
+  if (size < 0.25) return 12
+  if (size < 0.5)  return 24
+  if (size < 0.8)  return 32
+  if (size < 1.5)  return 48
+  return 64
+}
 
 const spheres = [
-  // { position: [0.3, 0, 0], size: 0.1, color: 'white', dCoef: { a: 0.01, b: 0.01 }, roughness: 0.35, metalness: 0.3, opacity: 1 },
+  // --- Transmission (glass/bubble) ---
+  { position: [-0.2, -0.05, 0.8],  size: 0.45, useTransmissionMaterial: true, transmissionRes: 128 },
+  { position: [0.35, -0.65, 2.5],  size: 0.3,  useTransmissionMaterial: true, transmissionRes: 128 },
+  { position: [0, 1, 0.2],          size: 0.55, useTransmissionMaterial: true, transmissionRes: 128 },
 
-  { position: [-0.2, -0.05, 0.8], size: 0.45, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.5 }, opacity: 1, clearcoat: 1, roughness: 0.6, metalness: 0, useTransmissionMaterial: true },
-  { position: [0.35, -0.65, 2.5], size: 0.3, color: '#FFFFFF', dCoef: { a: 0.25, b: 0.1 }, roughness: 0.25, metalness: 0, useTransmissionMaterial: true },
-  { position: [0, 1, 0.2], size: 0.55, color: '#FFFFFF', dCoef: { a: 0.3, b: 0.15 }, clearcoat: 0.8, roughness: 0.4, metalness: 0, useTransmissionMaterial: true },
+  // --- Metallic/matte ---
+  { position: [1.5, -0.5, 1],    size: 0.7,  color: 'grey',    dCoef: { a: 0.05, b: 0.2  }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9 },
+  { position: [-1.15, -1.75, -1], size: 0.7,  color: '#FFFFFF', dCoef: { a: 0.2,  b: 0.001}, clearcoat: 0,   roughness: 0.55, metalness: 0.6 },
+  { position: [-1.6, 1.6, -0.8], size: 1.0,  color: 'silver',  dCoef: { a: 0.1,  b: 0.1  }, clearcoat: 0,   roughness: 0.6,  metalness: 1   },
+  { position: [1.2, -0.5, -1.8], size: 1.2,  color: '#D9D9D9', dCoef: { a: 0.01, b: 0.2  }, clearcoat: 0,   roughness: 0.5,  metalness: 0   },
+  { position: [1.4, 2.3, -0.95], size: 1.05, color: 'silver',  dCoef: { a: 0.4,  b: 0.01 }, clearcoat: 0,   roughness: 0.6,  metalness: 0.8 },
 
-  { position: [1.5, -0.5, 1], size: 0.7, color: 'grey', dCoef: { a: 0.05, b: 0.2 }, clearcoat: 0.2, roughness: 0.45, metalness: 0.9, useTransmissionMaterial: false },
-  { position: [-1.15, -1.75, -1], size: 0.7, color: '#FFFFFF', dCoef: { a: 0.2, b: 0.001 }, clearcoat: 0, roughness: 0.55, metalness: 0.6 },
-  { position: [-1.6, 1.6, -0.8], size: 1, color: 'silver', dCoef: { a: 0.1, b: 0.1 }, roughness: 0.6, metalness: 1, useTransmissionMaterial: false },
+  // --- Static (no physics) ---
+  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, roughness: 0.45, metalness: 0, bumpScale: 0.4, isStatic: true },
+  { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
-  { position: [1.2, -0.5, -1.8], size: 1.2, color: '#D9D9D9', dCoef: { a: 0.01, b: 0.2 }, clearcoat: 0, roughness: 0.5, metalness: 0 },
-  { position: [1.4, 2.3, -0.95], size: 1.05, color: 'silver', dCoef: { a: 0.4, b: 0.01 }, clearcoat: 0, roughness: 0.6, metalness: 0.8, useTransmissionMaterial: false },
-  { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, opacity: 1, roughness: 0.45, metalness: 0, bumpScale: 0.4 },
-
-  { position: [-2, 1, -4], size: 2.0, color: 'grey', dCoef: { a: 0.05, b: 0.05 }, clearcoat: 0.9, roughness: 0.4, metalness: 0.2, opacity: 0.9 },
-
-  // New level of spheres (increased depth and cluster aesthetics)
-
-  // { position: [-1.15, 0.5, -10.3], size: 4.4, color: 'white', dCoef: { a: 0.0, b: 0.0 }, clearcoat: 0, opacity: 0.8, roughness: 0.45, metalness: 0, bumpScale: 0 },
-
-  // { position: [0.5, 0.7, -7], size: 0.9, color: '#DCDCDC', dCoef: { a: 0.2, b: 0.15 }, roughness: 0.35, metalness: 0.1 },
-  // { position: [-0.6, -0.3, -7.2], size: 0.6, color: '#BEBEBE', dCoef: { a: 0.1, b: 0.25 }, roughness: 0.4, metalness: 0.2 },
-  // { position: [-1.1, 1.0, -7.5], size: 1.1, color: '#D3D3D3', dCoef: { a: 0.3, b: 0.1 }, roughness: 0.25, metalness: 0.15 },
-  // { position: [1.2, -0.8, -7.8], size: 0.7, color: '#C0C0C0', dCoef: { a: 0.25, b: 0.2 }, roughness: 0.3, metalness: 0.1 },
-  // { position: [0, 0.5, -8], size: 1.2, color: '#F5F5F5', dCoef: { a: 0.2, b: 0.2 }, roughness: 0.5, metalness: 0.25 }
-
-
+  // --- Cloud of small transmission bubbles (right-center gap) ---
+  { position: [0.8,  0.55, 1.8], size: 0.22, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [1.1,  0.2,  2.2], size: 0.17, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [0.65, -0.15, 2.0],size: 0.14, useTransmissionMaterial: true, transmissionRes: 32 },
+  { position: [1.3,  -0.05, 1.5],size: 0.13, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.9,  -0.45, 2.5],size: 0.11, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.4,  0.35, 2.0], size: 0.10, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.6,  0.3,  2.5], size: 0.11, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.75, -0.65, 1.5],size: 0.09, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.2,  -0.45, 2.8],size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.0,  0.45, 2.8], size: 0.09, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.5,  -0.25, 2.3],size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.55, -0.85, 2.2],size: 0.07, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.3,  0.5,  1.2], size: 0.08, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.85, -1.0, 1.8], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.1,  -0.75, 1.3],size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.6,  -0.55, 1.8],size: 0.05, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [0.95, -1.15, 2.1],size: 0.05, useTransmissionMaterial: true, transmissionRes: 16 },
+  { position: [1.4,  -0.8, 2.5], size: 0.06, useTransmissionMaterial: true, transmissionRes: 16 },
 ]
 
 function Scene() {
   return (
-    <Canvas dpr={[1, 1.25]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], rotation: [0, 0, 0], fov: 25.5, near: 1, far: 35 }}>
+    <Canvas dpr={[1, 1.25]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], fov: 25.5, near: 1, far: 35 }}>
       <color attach="background" args={['#F9F9F9']} />
-      <Physics gravity={[0, 0, 0]} >
+      <Physics gravity={[0, 0, 0]}>
         <Pointer />
-
-
-        {/* {spheres.map((sphere, index) =>
-          <AnimatedSphere key={index} index={index} size={sphere.size} position={sphere.position} color={sphere.color} dCoef={sphere.dCoef} opacity={sphere.opacity}
-            clearcoat={sphere.clearcoat}
-            roughness={sphere.roughness}
-            metalness={sphere.metalness}
-          />
-        )} */}
-
-        {spheres.map((sphere, index) =>
+        {spheres.filter(s => !s.isStatic).map((sphere, index) =>
           <Shell key={index} sphere={{ ...sphere, index }} />
         )}
         <mesh position={[-1.15, 0.5, -10.3]}>
-          <sphereGeometry  args={[4.4, 64, 64]}/>
+          <sphereGeometry args={[4.4, 16, 16]} />
           <meshStandardMaterial color="white" />
         </mesh>
       </Physics>
 
+      {spheres.filter(s => s.isStatic).map((sphere, index) =>
+        <StaticSphere key={`static-${index}`} {...sphere} />
+      )}
+
       <ambientLight color="white" intensity={0.45} />
-      <directionalLight intensity={0.3} position={[3, 3, -1]}/>
+      <directionalLight intensity={0.3} position={[3, 3, -1]} />
 
-      {/* <spotLight position={[3, 3, 3]} angle={0.55} penumbra={0.34} intensity={1} castShadow /> */}
-      {/* <spotLight position={[-3.5, -1, 1]} angle={0.35} penumbra={0.14} intensity={8} castShadow /> */}
-
-      {/* <OrbitControls /> */}
       <EffectComposer disableNormalPass multisampling={0}>
         <N8AO distanceFalloff={1} aoRadius={1} intensity={4} />
-        {/* <FXAA /> */}
-        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={true}/>
+        <FXAA />
+        <Bloom intensity={0.3} luminanceThreshold={0.3} mipmapBlur={true} />
       </EffectComposer>
       <Environment>
         <group rotation={[-Math.PI / 3, 0, 1]}>
-
-          <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[2, 2, -3]} scale={3} />
-          <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-3, 2, -2]} scale={2} />
+          <Lightformer form="circle" intensity={2} rotation-x={Math.PI / 2} position={[2, 2, -3]} scale={3} />
+          <Lightformer form="circle" intensity={1} rotation-y={Math.PI / 2} position={[-3, 2, -2]} scale={2} />
           <Lightformer form="circle" intensity={2} rotation-y={Math.PI / 2} position={[-3, -3, -3]} scale={4} />
           <Lightformer form="circle" intensity={2} rotation-y={-Math.PI / 2} position={[3, 2, 0]} scale={4} />
         </group>
@@ -121,9 +110,9 @@ function Pointer({ vec = new Vector3() }) {
       (mouse.x * viewport.width) / 2,
       (mouse.y * viewport.height) / 2,
       0.5
-    );
-    vec.lerp(target.current, 0.1);
-    ref.current?.setTranslation(vec);
+    )
+    vec.lerp(target.current, 0.1)
+    ref.current?.setTranslation(vec)
   })
 
   return (
@@ -135,14 +124,16 @@ function Pointer({ vec = new Vector3() }) {
 
 function Shell({ sphere }) {
   const api = useRef()
-  const meshRef = useRef();
+  const meshRef = useRef()
 
-  const _currentPosition = useRef(new Vector3());
-  const _posVector = useRef(new Vector3(...sphere.position));
-  const _offset = useRef(new Vector3());
-  const _impulse = useRef(new Vector3());
+  const _currentPosition = useRef(new Vector3())
+  const _posVector = useRef(new Vector3(...sphere.position))
+  const _offset = useRef(new Vector3())
+  const _impulse = useRef(new Vector3())
 
   useFrame(({ delta }) => {
+    // Skip computation for sleeping bodies (Rapier sleep optimization)
+    if (api.current?.isSleeping()) return
 
     delta = Math.min(delta, 0.1)
 
@@ -162,57 +153,68 @@ function Shell({ sphere }) {
       _impulse.current
         .copy(_offset.current)
         .normalize()
-        .multiplyScalar(0.5 * sphere.size);
-
+        .multiplyScalar(0.5 * sphere.size)
       api.current?.applyImpulse(_impulse.current, true)
     }
   })
 
   return (
-    <RigidBody restitution={0} type="dynamic" mass={((Math.pow(sphere.size, 2)))} ref={api} position={sphere.position} linearDamping={1.55} angularDamping={0.8}>
-      {/* <BallCollider args={[sphere.size]}/> */}
+    <RigidBody restitution={0} type="dynamic" mass={Math.pow(sphere.size, 2)} ref={api} position={sphere.position} linearDamping={1.55} angularDamping={0.8}>
       <AnimatedSphere ref={meshRef} {...sphere} />
-      {/* <pointLight intensity={1} distance={1.5} color={sphere.color} /> */}
     </RigidBody>
-
   )
 }
 
-const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 0.4, bumpScale = 1, useTransmissionMaterial = false }, ref) => {
-  const materialRef = useRef();
-  // const meshRef = useRef();
+function StaticSphere({ size, position, color, roughness, metalness, clearcoat, opacity = 1, bumpScale = 1, dCoef = { a: 0.05, b: 0.05 } }) {
+  const bumpMap = useTexture('./bump.jpg')
+  const res = getSphRes(size)
+  return (
+    <mesh position={position} castShadow receiveShadow>
+      <sphereGeometry args={[size, res, res]} />
+      <MeshDistortMaterial
+        color={color}
+        distort={dCoef.b}
+        speed={0}
+        bumpMap={bumpMap}
+        bumpScale={bumpScale}
+        metalness={metalness}
+        roughness={roughness}
+        clearcoat={clearcoat}
+        clearcoatRoughness={0.6}
+        transparent={opacity < 1}
+        opacity={opacity}
+      />
+    </mesh>
+  )
+}
 
-  // const [material, set] = useState();
-
-  const bumpMap = useTexture('./bump.jpg');
-
+const AnimatedSphere = forwardRef(({ size, color, dCoef, index, transparent = true, opacity = 1, metalness = 0, roughness = 0.35, clearcoat = 0.4, bumpScale = 1, useTransmissionMaterial = false, transmissionRes = 64 }, ref) => {
+  const materialRef = useRef()
+  const bumpMap = useTexture('./bump.jpg')
+  const res = getSphRes(size)
 
   useFrame(({ clock }) => {
-    const time = clock.getElapsedTime();
-    if (materialRef.current && !useTransmissionMaterial) {
-      materialRef.current.distort = Math.cos(Math.sin(time + Math.PI * Math.pow(index, 2))) * dCoef.a + dCoef.b; // Анимация для обычного материала
-    }    // meshRef.current.geometry.computeVertexNormals(); // Обновление нормалей
-
-  });
+    const time = clock.getElapsedTime()
+    if (materialRef.current && !useTransmissionMaterial && dCoef) {
+      materialRef.current.distort = Math.cos(Math.sin(time + Math.PI * Math.pow(index, 2))) * dCoef.a + dCoef.b
+    }
+  })
 
   return (
     <mesh ref={ref} castShadow receiveShadow>
-      <sphereGeometry args={[size, sphRes, sphRes]} />
+      <sphereGeometry args={[size, res, res]} />
       {useTransmissionMaterial ? (
         <MeshTransmissionMaterial
-          // color={color}
-          clearcoat={0.15}
-          roughness={0.3}
-          thickness={1.4}
-          ior={1.8}
-          chromaticAberration={0.3}
-          anisotropy={0.9}
-          anisotropyBlur={0.9}
-          samples={2}
-          distortion={0.6}
-          distortionScale={0.2}
-          temporalDistortion={0.1}
-          resolution={32}
+          roughness={0.05}
+          thickness={0.6}
+          ior={1.4}
+          chromaticAberration={0.5}
+          anisotropy={0}
+          envMapIntensity={0.15}
+          samples={1}
+          distortion={0}
+          temporalDistortion={0}
+          resolution={transmissionRes}
         />
       ) : (
         <MeshDistortMaterial
@@ -230,8 +232,7 @@ const AnimatedSphere = forwardRef(({ size, position, color, dCoef, index, transp
         />
       )}
     </mesh>
-  );
+  )
 })
 
 export default App
-
