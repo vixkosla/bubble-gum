@@ -41,23 +41,22 @@ const spheres = [
   { position: [-2.15, -0.2, 2.3], size: 1.4, color: 'white', dCoef: { a: 0.1, b: 0.1 }, clearcoat: 0.3, roughness: 0.45, metalness: 0, bumpScale: 0.4, isStatic: true },
   { position: [-2, 1, -4],        size: 2.0, color: 'grey',  dCoef: { a: 0.05, b: 0.05}, clearcoat: 0.9, roughness: 0.4,  metalness: 0.2, opacity: 0.9, isStatic: true },
 
-  // --- Bridge B1: top transmission [0,1,0.2] → grey metal [1.5,-0.5,1] ---
-  { position: [ 0.59,  0.42, 0.51], size: 0.22, color: '#AA00FF', dCoef: { a: 0, b: 0.06 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.66,  0.34, 0.55], size: 0.28, color: '#FFD600', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.75,  0.25, 0.60], size: 0.25, color: '#00C853', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.83,  0.18, 0.64], size: 0.20, color: '#FFD600', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0, isStatic: true },
-
-  // --- Bridge B2: center transmission [-0.2,-0.05,0.8] → bottom transmission [0.35,-0.65,2.5] ---
-  { position: [ 0.04, -0.31, 1.53], size: 0.22, color: '#00C853', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.10, -0.38, 1.74], size: 0.27, color: '#AA00FF', dCoef: { a: 0, b: 0.06 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.17, -0.45, 1.94], size: 0.24, color: '#FFD600', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0, isStatic: true },
-  { position: [ 0.22, -0.51, 2.09], size: 0.20, color: '#00C853', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0, isStatic: true },
-
-  // --- Bridge B3: white static [-2.15,-0.2,2.3] → top transmission [0,1,0.2] ---
-  { position: [-0.95,  0.47, 1.12], size: 0.22, color: '#FFD600', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0, isStatic: true },
-  { position: [-0.82,  0.54, 1.00], size: 0.27, color: '#AA00FF', dCoef: { a: 0, b: 0.06 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0, isStatic: true },
-  { position: [-0.69,  0.62, 0.87], size: 0.24, color: '#00C853', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0, isStatic: true },
-  { position: [-0.60,  0.66, 0.79], size: 0.20, color: '#FFD600', dCoef: { a: 0, b: 0.06 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0, isStatic: true },
+  // --- Colored accent spheres — scattered, physics, verified no-overlap ---
+  // Zone: right-center (between main cluster and front)
+  { position: [ 0.60,  0.20, 2.00], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
+  { position: [ 1.00, -0.20, 2.20], size: 0.26, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
+  { position: [ 0.80, -0.50, 1.80], size: 0.22, color: '#AA00FF', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
+  { position: [ 0.50,  0.70, 1.80], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
+  { position: [ 0.90,  0.40, 1.40], size: 0.22, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
+  { position: [ 1.20,  0.10, 1.80], size: 0.20, color: '#AA00FF', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
+  // Zone: upper area
+  { position: [ 0.40,  1.40, 1.20], size: 0.22, color: '#AA00FF', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
+  { position: [ 0.70,  1.60, 0.80], size: 0.24, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
+  // Zone: left-center
+  { position: [-0.60,  0.80, 1.40], size: 0.24, color: '#00C853', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
+  { position: [-0.80,  0.50, 1.00], size: 0.22, color: '#FFD600', dCoef: { a: 0.04, b: 0.09 }, metalness: 0.9,  roughness: 0.10, clearcoat: 1.0 },
+  { position: [-0.40, -0.50, 1.60], size: 0.20, color: '#00C853', dCoef: { a: 0.06, b: 0.07 }, metalness: 0.9,  roughness: 0.12, clearcoat: 1.0 },
+  { position: [ 0.20, -0.70, 1.30], size: 0.22, color: '#AA00FF', dCoef: { a: 0.05, b: 0.08 }, metalness: 0.85, roughness: 0.15, clearcoat: 1.0 },
 ]
 
 function Scene() {
