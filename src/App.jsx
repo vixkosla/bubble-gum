@@ -96,20 +96,8 @@ function BackgroundSphere() {
     ior:                 { value: 1.5,  min: 1,   max: 2.5, step: 0.01 },
     chromaticAberration: { value: 0.4,  min: 0,   max: 2,   step: 0.01 },
   })
-  const meshRef = useRef()
-  const { pointer } = useThree()
-  const BASE = [-1.15, 0.5, -10.3]
-
-  useFrame((_, delta) => {
-    if (!meshRef.current) return
-    const tx = BASE[0] + pointer.x * 1.8
-    const ty = BASE[1] + pointer.y * 1.2
-    meshRef.current.position.x += (tx - meshRef.current.position.x) * delta * 1.8
-    meshRef.current.position.y += (ty - meshRef.current.position.y) * delta * 1.8
-  })
-
   return (
-    <mesh ref={meshRef} position={BASE}>
+    <mesh position={[-1.15, 0.5, -10.3]}>
       <sphereGeometry args={[4.4, 32, 32]} />
       <MeshTransmissionMaterial
         transmissionSampler
@@ -222,7 +210,7 @@ const dynamicSpheres = spheres.filter(s => !s.isStatic && !s.isOrbital)
 
 function AccentGroup() {
   const { accentVisible } = useControls('Experiment', {
-    accentVisible: { value: false, label: 'accent balls visible' },
+    accentVisible: { value: true, label: 'accent balls visible' },
   })
   return dynamicSpheres
     .filter(s => s.isAccent)
@@ -389,7 +377,7 @@ function Scene() {
         <Pointer />
         {dynamicSpheres.filter(s => !s.isAccent).map((sphere) => {
           const index = dynamicSpheres.indexOf(sphere)
-          return <Shell key={index} sphere={{ ...sphere, index }} meshVisible={false} />
+          return <Shell key={index} sphere={{ ...sphere, index }} />
         })}
         <AccentGroup />
         <BackgroundSphere />
