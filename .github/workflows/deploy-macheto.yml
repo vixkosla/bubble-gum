@@ -1,0 +1,17 @@
+name: Deploy variant/macheto to Netlify
+
+on:
+  push:
+    branches: [variant/macheto]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - run: npx netlify-cli deploy --prod --dir=dist --site ${{ secrets.NETLIFY_SITE_MACHETO }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
