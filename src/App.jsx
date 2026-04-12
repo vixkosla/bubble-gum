@@ -371,7 +371,7 @@ function OrbitalMetallics() {
 function Scene() {
   return (
     <Canvas dpr={[0.75, 1]} shadows gl={{ antialias: false, preserveDrawingBuffer: true }} camera={{ position: [0, 0, 20], fov: 25.5, near: 1, far: 60 }}>
-      <SparkleBackground />
+      <color attach="background" args={['#F9F9F9']} />
       <CameraRotator />
       <Physics gravity={[0, 0, 0]}>
         <Pointer />
