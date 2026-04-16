@@ -4,7 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { MeshDistortMaterial, MeshTransmissionMaterial, Environment, Lightformer, useTexture } from '@react-three/drei'
 import { EffectComposer, N8AO, Bloom, FXAA, ChromaticAberration, Vignette, HueSaturation } from '@react-three/postprocessing'
 import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
-import { useControls } from 'leva'
+import { useControls, Leva } from 'leva'
 import './App.css'
 
 function FPSStats() {
@@ -117,8 +117,10 @@ function BackgroundSphere() {
 }
 
 function App() {
+  const isMobile = window.innerWidth < 768
   return (
     <div className="container-canvas">
+      <Leva hidden={isMobile} />
       <Scene />
       <FPSStats />
     </div>
