@@ -7,6 +7,8 @@ import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
 import { useControls, Leva } from 'leva'
 import './App.css'
 
+const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
 function FPSStats() {
   const [fps, setFps] = useState(60)
   const [history, setHistory] = useState(() => Array(60).fill(60))
@@ -100,7 +102,7 @@ function BackgroundSphere() {
     <mesh position={[-1.15, 0.5, -10.3]}>
       <sphereGeometry args={[4.4, 28, 28]} />
       <MeshTransmissionMaterial
-        transmissionSampler
+        transmissionSampler={!IS_MOBILE}
         color={color}
         roughness={roughness}
         thickness={thickness}
@@ -411,7 +413,7 @@ function HypnoSphere({ position, size, glassControls = FRONT_GLASS_DEFAULTS, tin
       <sphereGeometry args={[size, res, res]} />
       <MeshTransmissionMaterial
         backside
-        transmissionSampler
+        transmissionSampler={!IS_MOBILE}
         color={tint}
         samples={1}
         resolution={48}
@@ -749,7 +751,7 @@ function Scene() {
     frontFill:{ value: REFLECTION_BOOST_DEFAULTS.frontFill,min: 0, max: 3, step: 0.05 },
   })
   return (
-    <Canvas shadows dpr={[performance.dprMin, Math.max(performance.dprMin, performance.dprMax)]} gl={{ antialias: false }} camera={{ position: [0, 0, 20], fov: 25.5, near: 1, far: 60 }}>
+    <Canvas shadows dpr={[performance.dprMin, Math.max(performance.dprMin, performance.dprMax)]} gl={{ antialias: false, outputColorSpace: 'srgb' }} camera={{ position: [0, 0, 20], fov: 25.5, near: 1, far: 60 }}>
       <color attach="background" args={['#F9F9F9']} />
       <CameraRotator />
       <Physics gravity={[0, 0, 0]}>
@@ -991,7 +993,7 @@ const AnimatedSphere = forwardRef(({ size, color, dCoef, index, transparent = tr
       <sphereGeometry args={[size, res, res]} />
       {useTransmissionMaterial ? (
         <MeshTransmissionMaterial
-          transmissionSampler
+          transmissionSampler={!IS_MOBILE}
           color={tint ?? glassControls.tint}
           roughness={glassControls.roughness}
           thickness={glassControls.thickness}
