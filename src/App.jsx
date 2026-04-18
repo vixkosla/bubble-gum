@@ -7,6 +7,8 @@ import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
 import { useControls } from 'leva'
 import './App.css'
 
+const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
 function FPSStats() {
   const [fps, setFps] = useState(60)
   const [history, setHistory] = useState(() => Array(60).fill(60))
@@ -111,7 +113,7 @@ function BackgroundSphere() {
     <mesh ref={meshRef} position={BASE}>
       <sphereGeometry args={[4.4, 32, 32]} />
       <MeshTransmissionMaterial
-        transmissionSampler
+        transmissionSampler={!IS_MOBILE}
         color={color}
         roughness={roughness}
         thickness={thickness}
